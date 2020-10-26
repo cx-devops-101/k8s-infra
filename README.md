@@ -1,20 +1,67 @@
 # k8s-infra
-This repository contains the cluster manifests for the Computas DevOps 101 workshop.
+This repository contains the Kubernetes Cluster Manifests for the Computas DevOps 101 workshop. This readme is for the 
+workshop participants, if you are an instructor and need the Setup instructions see [here](Setup.md).
 
-## Setup
-Note that the `create-cluster.sh` script assumes that the project to host the cluster is `computas-universitet`.
-Update it if you need to deploy to another Google Cloud Project.
+## Step 5: Forked it, now what?
+So far you've created your own application repository, added CI workflows that automatically build and push your 
+container images, declared how you want your application to be deployed, and you've forked this repository. The reason
+you forked this repository is that you want to propose a change to the [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra) 
+repository, where you tell the GitOps operator about your application's workload manifests. In stark opposite from before, 
+this time we actually do want the pull-requests to be merged back into the original repository, i.e. 
+[cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra), so make a mental note of that. Let's begin adding 
+our new application to the cluster.
 
-1. Create cluster: `./create-cluster.sh`
-2. Check if the devops-101-ip has been reserved: `gcloud compute addresses describe devops-101-ip`
-  1. Create it if not: `gcloud compute addresses create devops-101-ip --region europe-north1`
-3. Fetch the IP: `export IP="$(gcloud compute addresses describe devops-101-ip --region europe-north1 | grep address: | cut -d ' ' -f 2)"`
-4. Replace the IP in the ingress manifest: `sed -ie "s/loadBalancerIP:\s\+\(.\+\)/loadBalancerIP: $IP/g" cluster-production/ingress-deployment.yaml`
-5. Commit and push the change.
-6. Setup GitHub token in env: `export GITHUB_TOKEN="$(cat token.txt)"` 
-  1. If you don't have a token, create a Personal Access Token with full repo-scope [here](https://github.com/settings/tokens)
-7. Bootstrap the cluster with gitops-toolkit: `gotk bootstrap github --owner=cx-devops-101 --repository=k8s-infra --path=cluster-production`
+## Step 6: Declare application
+The declaration of our application will consist of a new directory with three files:
+1. `<github-username>/namespace.yaml`: In this file we declare the namespace that we want to deploy our application into.
+1. `<github-username>/notes-app-source.yaml`: In this file we tell the GitOps operator about our application repository.
+1. `<github-username>/notes-app.yaml`: In this file we tell the GitOps operator where to find the kubernetes workload manifests for our application in the repository we told it about in the previous file.
 
-## Tear-down
-1. Delete cluster `gcloud beta container clusters delete devops-101`
-2. Delete static ip `gcloud compute addresses delete devops-101-ip`
+Adding new files to a new directory through the GitHub website is a bit more difficult to explain in text but we'll try 
+our best, though hopefully the instructors has already shown you how. First off, navigate to the [cluster-production](cluster-production)
+directory. Before we continue, open the [notes-app](cluster-production/notes-app) in a new browser tab, you'll need it later.
+
+### namespace.yaml
+1. Click on `Add file` in the upper-right corner of the file view.
+1. Then click on `Create new file`.
+1. You should be redirected to a text-editor where you'll see a `Name your file...` text input.
+1. Type in `<github-username>/namespace.yaml`. When you've added the `/` the UI will make it clear that it understands that you want to put the file in a directory named `<github-username>`.
+1. Open [notes-app/namespace.yaml](cluster-production/notes-app/namespace.yaml) in a new tab, and copy the file contents.
+1. Paste the contents into your new file.
+1. Replace `name: notes-app` with `name: <github-username>`.
+1. Commit the file directly to the `main`-branch.
+
+### notes-app-source.yaml
+1. Navigate to the `<github-username>` directory you added when you created `namespace.yaml`.
+1. Then click on `Create new file`.
+1. Enter `notes-app-source.yaml` as the filename.
+1. Open [notes-app/notes-app-source.yaml](cluster-production/notes-app/notes-app-source.yaml) in a new tab, and copy the file contents.
+1. Paste the contents into your new file.
+1. Replace `name: notes-app` with `name: <github-username>`.
+1. Replace `branch: production` with `branch: master`.
+1. Replace `https://github.com/cx-devops-101/notes-app` with the url to your notes-app repository, e.g. `https://github.com/<github-username>/notes-app`.
+1. Commit the file directly to the `main`-branch.
+
+### notes-app.yaml
+1. Navigate to the `<github-username>` directory you added when you created `namespace.yaml`.
+1. Then click on `Create new file`.
+1. Enter `notes-app.yaml` as the filename.
+1. Open [notes-app/notes-app.yaml](cluster-production/notes-app/notes-app.yaml) in a new tab, and copy the file contents.
+1. Paste the contents into your new file.
+1. Replace both instances of `name: notes-app` with `name: <github-username>`.
+1. Replace `branch: production` with `branch: master`.
+1. Replace `targetNamespace: notes-app` with `targetNamespace: <github-username>`
+1. Commit the file directly to the `main`-branch.
+
+## Step 7: Pull request
+At this point you should have added some new files to your fork of [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra),
+and you should be ready to create a pull request back to the source repository. Navigate back to the root of your repository. You should
+see a grey box where it says `This branch is 3 commits ahead of cx-devops-101:main.` with a `Pull request` link to the right, click on it.
+You should be redirected to a page with the title `Comparing changes`, and you should see the following at the top:
+1. `base repository: cx-devops-101/k8s-infra` and `base: main`
+1. `head repository: <github-username>/k8s-infra` and `compare: main`
+1. `Able to merge`
+
+If all that seems to match up, then go ahead and create the pull request. A maintainer of [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra)
+will look at your pull request as soon as possible, and when it is merged your application should quickly be available at the domain
+you declared in the igress.yaml in your `notes-app` repository, e.g. `http://<github-username>.devops.rosbach.no`.
