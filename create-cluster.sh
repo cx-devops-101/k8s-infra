@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# --enable-stackdriver-kubernetes \
-#  --addons HorizontalPodAutoscaling,HttpLoadBalancing \
-
-
 gcloud beta container --project "computas-universitet" clusters create "devops-101" \
   --zone "europe-north1-a" \
   --no-enable-basic-auth \

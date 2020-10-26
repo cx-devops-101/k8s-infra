@@ -7,6 +7,6 @@ metadata:
 spec:
   interval: 30s
   ref:
-    branch: master
+    branch: production
   url: https://github.com/cx-devops-101/notes-app
 
