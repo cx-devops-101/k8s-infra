@@ -12,6 +12,12 @@ Update it if you need to deploy to another Google Cloud Project.
   1. If you don't have a token, create a Personal Access Token with full repo-scope [here](https://github.com/settings/tokens)
 7. Bootstrap the cluster with gitops-toolkit: `gotk bootstrap github --owner=cx-devops-101 --repository=k8s-infra --path=cluster-production`
 
+## Slack notification
+1. Goto [Slack apps](https://api.slack.com/apps/new)
+1. Create app
+1. Add webhook to channel and save to file webhook.txt
+1. Create secret in kubernetes: `kubectl -n gotk-system create secret generic slack-webhook-url --from-literal="address=$(/bin/cat webhook.txt)"`
+
 ## Tear-down
 1. Delete cluster `gcloud beta container clusters delete devops-101`
 2. Delete static ip `gcloud compute addresses delete devops-101-ip`
