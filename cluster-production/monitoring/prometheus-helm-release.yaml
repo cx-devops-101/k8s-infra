@@ -12,5 +12,13 @@ spec:
         kind: HelmRepository
         name: prometheus-helm-charts
       version: 11.16.5
+  values:
+    server:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "nginx"
+        hosts:
+          prometheus.devops.rosbach.no
   interval: 10m0s
 
