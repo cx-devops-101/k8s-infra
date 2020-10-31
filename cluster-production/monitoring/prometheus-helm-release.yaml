@@ -19,6 +19,6 @@ spec:
         annotations:
           kubernetes.io/ingress.class: "nginx"
         hosts:
-          prometheus.devops.rosbach.no
+          - prometheus.devops.rosbach.no
   interval: 10m0s
 
