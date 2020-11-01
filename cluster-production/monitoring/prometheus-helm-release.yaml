@@ -13,6 +13,13 @@ spec:
         name: prometheus-helm-charts
       version: 11.16.5
   values:
+    alertmanager:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+        hosts:
+          - alertmanager.devops.rosbach.no
     server:
       ingress:
         enabled: true
@@ -20,5 +27,6 @@ spec:
           kubernetes.io/ingress.class: "nginx"
         hosts:
           - prometheus.devops.rosbach.no
+
   interval: 10m0s
 
