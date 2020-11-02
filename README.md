@@ -1,14 +1,14 @@
 # k8s-infra
-This repository contains the Kubernetes Cluster Manifests for the Computas DevOps 101 workshop. This readme is for the 
+This repository contains the Kubernetes Cluster Manifests for the Computas DevOps 101 workshop. This readme is for the
 workshop participants, if you are an instructor and need the Setup instructions see [here](Setup.md).
 
 ## Step 5: Forked it, now what?
-So far you've created your own application repository, added CI workflows that automatically build and push your 
+So far you've created your own application repository, added CI workflows that automatically build and push your
 container images, declared how you want your application to be deployed, and you've forked this repository. The reason
-you forked this repository is that you want to propose a change to the [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra) 
-repository, where you tell the GitOps operator about your application's workload manifests. In stark opposite from before, 
-this time we actually do want the pull-requests to be merged back into the original repository, i.e. 
-[cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra), so make a mental note of that. Let's begin adding 
+you forked this repository is that you want to propose a change to the [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra)
+repository, where you tell the GitOps operator about your application's workload manifests. In stark opposite from before,
+this time we actually do want the pull-requests to be merged back into the original repository, i.e.
+[cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra), so make a mental note of that. Let's begin adding
 our new application to the cluster.
 
 ## Step 6: Declare application
@@ -17,9 +17,11 @@ The declaration of our application will consist of a new directory with three fi
 1. `<github-username>/notes-app-source.yaml`: In this file we tell the GitOps operator about our application repository.
 1. `<github-username>/notes-app.yaml`: In this file we tell the GitOps operator where to find the kubernetes workload manifests for our application in the repository we told it about in the previous file.
 
-Adding new files to a new directory through the GitHub website is a bit more difficult to explain in text but we'll try 
+Adding new files to a new directory through the GitHub website is a bit more difficult to explain in text but we'll try
 our best, though hopefully the instructors has already shown you how. First off, navigate to the [cluster-production](cluster-production)
 directory. Before we continue, open the [notes-app](cluster-production/notes-app) in a new browser tab, you'll need it later.
+
+![](images/github-add-file.gif)
 
 ### namespace.yaml
 1. Click on `Add file` in the upper-right corner of the file view.
@@ -49,7 +51,6 @@ directory. Before we continue, open the [notes-app](cluster-production/notes-app
 1. Open [notes-app/notes-app.yaml](cluster-production/notes-app/notes-app.yaml) in a new tab, and copy the file contents.
 1. Paste the contents into your new file.
 1. Replace both instances of `name: notes-app` with `name: <github-username>`.
-1. Replace `branch: production` with `branch: master`.
 1. Replace `targetNamespace: notes-app` with `targetNamespace: <github-username>`
 1. Commit the file directly to the `main`-branch.
 
@@ -61,6 +62,8 @@ You should be redirected to a page with the title `Comparing changes`, and you s
 1. `base repository: cx-devops-101/k8s-infra` and `base: main`
 1. `head repository: <github-username>/k8s-infra` and `compare: main`
 1. `Able to merge`
+
+![](images/create-pull-request-to-maintainer.gif)
 
 If all that seems to match up, then go ahead and create the pull request. A maintainer of [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra)
 will look at your pull request as soon as possible, and when it is merged your application should quickly be available at the domain
