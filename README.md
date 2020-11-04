@@ -71,9 +71,10 @@ you declared in the igress.yaml in your `notes-app` repository, e.g. `http://<gi
 
 ## Step 8: Monitoring
 Monitoring of important metrics and logs is essential to successfully implement DevOps. Developers and other stakeholders must be able to observe the metrics in specialized dashboards, and receive notifications when certain metrics exceeds a defined threshold or if a failure switch has been triggered. Good
-dashboards can provide developers important insight into parameters such as performance, usage patterns, resource capacity, stability during peak hours etc.
-There are many tools that one can use to set up monitoring with, and we will cover the basics you one such toolset, namely Grafana and Prometheus. Grafana
-and Prometheus are very popular, and the go to solution for many Kubernetes DevOps-driven environments. We will not cover monitoring of logs in this workshop.
+dashboards can provide developers with important insight into parameters such as performance, usage patterns, resource capacity, stability during peak hours
+etc. There are many tools that one can use to set up monitoring with, and we will cover the basics of one such toolset, namely Grafana and Prometheus. 
+Grafana and Prometheus are very popular, and the go to solution for many Kubernetes DevOps-driven environments. We will not cover monitoring of logs in this
+workshop.
 
 We have already installed Prometheus and Grafana in the workshop Kubernetes cluster at [grafana.devops.rosbach.no](grafana.devops.rosbach.no). The workshop
 instructors should already have provided you with the necessary credentials. The `notes-api` service exposes metrics to Prometheus using 
@@ -91,12 +92,16 @@ Then click on the `Add new panel` button.
 ![](images/add-panel.png)
 
 Let's begin by declaring a simple query to verify that we're able to see some data. The page that you have in front of you now is divided into three
-primary views: visualization of your panel (top), query declarations (bottom) and panel settings (right). We want to start by entering the following
-PromQL (i.e Prometheus query) query into the `Metrics` text input of `A`: `http_server_requests_seconds_count`.
+primary views: visualization of your panel (top), query declarations (bottom) and panel settings (right). 
+
+![](images/new-panel.png)
+
+We want to start by entering the following PromQL (i.e Prometheus query) query into the `Metrics` text input of `A`: `http_server_requests_seconds_count`.
 
 ![](images/query-1.png)
 
-This query will list every such timeseries in the entire kubernetes cluster. It's the `notes-api` application that produces these timeseries, and every participant of this workshop will have deployed one.
+This query will list every such timeseries in the entire kubernetes cluster. It's the `notes-api` application instances that produces these timeseries, 
+and every participant of this workshop will have deployed one.
 
 ![](images/graph-1.png)
 
@@ -138,7 +143,11 @@ Let's sum it all together so that we have one line that shows the total request 
 
 ![](images/query-5.png)
 
-We have achieved our goal and you should see a nice graph that visualizes the request load over time. Put some pressure on your application by using
+We have achieved our goal and you should see a nice graph that visualizes the request load over time. Put some pressure on your application by
 creating, updating and deleting sticky notes to see how it works.
 
 ![](images/graph-5.png)
+
+## Step 9: We need more panels
+
+Play around with Grafana and see if you can come up with some handy metrics to visualize.
