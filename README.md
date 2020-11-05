@@ -72,18 +72,17 @@ you declared in the igress.yaml in your `notes-app` repository, e.g. `http://<gi
 ## Step 8: Monitoring
 Monitoring of important metrics and logs is essential to successfully implement DevOps. Developers and other stakeholders must be able to observe the metrics in specialized dashboards, and receive notifications when certain metrics exceeds a defined threshold or if a failure switch has been triggered. Good
 dashboards can provide developers with important insight into parameters such as performance, usage patterns, resource capacity, stability during peak hours
-etc. There are many tools that one can use to set up monitoring with, and we will cover the basics of one such toolset, namely Grafana and Prometheus. 
+etc. There are many tools that one can use to set up monitoring with, and we will cover the basics of one such toolset, namely Grafana and Prometheus.
 Grafana and Prometheus are very popular, and the go to solution for many Kubernetes DevOps-driven environments. We will not cover monitoring of logs in this
 workshop.
 
 We have already installed Prometheus and Grafana in the workshop Kubernetes cluster at [grafana.devops.rosbach.no](grafana.devops.rosbach.no). The workshop
-instructors should already have provided you with the necessary credentials. The `notes-api` service exposes metrics to Prometheus using 
-[micrometer](micrometer.io), and the deployment manifest includes annotations that tell Prometheus where to scrape those metrics from. 
+instructors should already have provided you with the necessary credentials. The `notes-api` service exposes metrics to Prometheus using
+[micrometer](micrometer.io), and the deployment manifest includes annotations that tell Prometheus where to scrape those metrics from.
 
 ## Create a Dashboard
 It's time to create your very own insightful dashboard. We want our dashboard to show us the average number of requests per second in 5 minute windows.
-To create the dashboard navigate to [grafana.devops.rosbach.no](grafana.devops.rosbach.no), click on the `+` button on the left-hand side, and then click 
-on `Create`.
+To create the dashboard navigate to [grafana.devops.rosbach.no](http://grafana.devops.rosbach.no/), log in with the username "admin" (ask one of the workshop hosts for the super-secret password), click on the `+` button on the left-hand side, and then click on `Create`.
 
 ![](images/create-dashboard.png)
 
@@ -92,31 +91,31 @@ Then click on the `Add new panel` button.
 ![](images/add-panel.png)
 
 Let's begin by declaring a simple query to verify that we're able to see some data. The page that you have in front of you now is divided into three
-primary views: visualization of your panel (top), query declarations (bottom) and panel settings (right). 
+primary views: visualization of your panel (top), query declarations (bottom) and panel settings (right).
 
 ![](images/new-panel.png)
 
-We want to start by entering the following PromQL (i.e Prometheus query) query into the `Metrics` text input of `A`: `http_server_requests_seconds_count`.
+We want to start by entering the following PromQL (i.e Prometheus query) query into the "Metrics" text input named "A": `http_server_requests_seconds_count`.
 
 ![](images/query-1.png)
 
-This query will list every such timeseries in the entire kubernetes cluster. It's the `notes-api` application instances that produces these timeseries, 
+This query will list every such timeseries in the entire kubernetes cluster. It's the `notes-api` application instances that produces these timeseries,
 and every participant of this workshop will have deployed one.
 
 ![](images/graph-1.png)
 
 We obviously have to filter our results so that we only get the timeseries for our application. Each of the `http_server_requests_seconds_count` timeseries
 have labels attached to them, and we can add filtering to our query so that we only find the timeseries for your Kubernetes namespace. If you followed the
-[instructions](https://github.com/cx-devops-101/k8s-infra#namespaceyaml) the name of the namespace will be your GitHub username, so replace 
+[instructions](https://github.com/cx-devops-101/k8s-infra#namespaceyaml) the name of the namespace will be your GitHub username, so replace
 `<GitHub username>` in the following query and paste it into Grafana: `http_server_requests_seconds_count{kubernetes_namespace="<GitHub username"}`.
 
 ![](images/query-2.png)
 
-This will decrease the number of timeseries in the graph such that you only see the timeseries for your instance of the `notes-api` service. But we're still
-including more timeseries than we want to. Prometheus is scraping data about the health and metrics endpoints of `notes-api`, which really aren't very 
-interesting in our graph, since they will completely dominate it. 
+This will decrease the number of timeseries in the graph such that you only see the timeseries for your instance of the `notes-api` service (you might need to click outside the query input box to get the graph to update). But we're still
+including more timeseries than we want to. Prometheus is scraping data about the health and metrics endpoints of `notes-api`, which really aren't very
+interesting in our graph, since they will completely dominate it.
 
-You may have noticed the warning `Metric http_server_requests_seconds_count is a counter.` as well, ignore that for now, we'll get back to it. 
+You may have noticed the warning `Metric http_server_requests_seconds_count is a counter.` as well, ignore that for now, we'll get back to it.
 
 ![](images/graph-2.png)
 
@@ -148,6 +147,6 @@ creating, updating and deleting sticky notes to see how it works.
 
 ![](images/graph-5.png)
 
-## Step 9: We need more panels
+## Step 9: We need more panels!
 
 Play around with Grafana and see if you can come up with some handy metrics to visualize.
