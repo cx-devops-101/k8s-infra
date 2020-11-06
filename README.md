@@ -6,8 +6,9 @@ workshop participants, if you are an instructor and need the Setup instructions 
 So far you've created your own application repository, added CI workflows that automatically build and push your
 container images, declared how you want your application to be deployed, and you've forked this repository. The reason
 you forked this repository is that you want to propose a change to the [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra)
-repository, where you tell the GitOps operator about your application's workload manifests. In stark opposite from before,
-this time we actually do want the pull-requests to be merged back into the original repository, i.e.
+repository, where you tell the GitOps operator about your application's workload manifests.
+
+In stark opposite from before, this time we actually do want the pull-requests to be merged back into the original repository, i.e.
 [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra), so make a mental note of that. Let's begin adding
 our new application to the cluster.
 
