@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: steinarkindingstad
+  namespace: gotk-system
+spec:
+  interval: 30s
+  ref:
+    branch: master
+  url: https://github.com/steinarkindingstad/notes-app
