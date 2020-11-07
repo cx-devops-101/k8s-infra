@@ -6,6 +6,6 @@ metadata:
 spec:
   interval: 30s
   ref:
-    branch: production
+    branch: master
   url: https://github.com/mortenmj/notes-app
   
