@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 30s
   ref:
-    branch: production
-  url: https://github.com/cx-devops-101/notes-app
+    branch: master
+  url: https://github.com/hanschrhane/notes-app
