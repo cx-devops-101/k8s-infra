@@ -9,6 +9,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: notes-app
+    name: malgivonkokos
   validation: client
   targetNamespace: malgivonkokos
