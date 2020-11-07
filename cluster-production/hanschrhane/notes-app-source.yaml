@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: notes-app
+  namespace: gotk-system
+spec:
+  interval: 30s
+  ref:
+    branch: production
+  url: https://github.com/cx-devops-101/notes-app
