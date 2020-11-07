@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: mortenmj
+  namespace: gotk-system
+spec:
+  interval: 30s
+  ref:
+    branch: production
+  url: https://github.com/mortenmj/notes-app
