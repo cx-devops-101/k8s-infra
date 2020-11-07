@@ -6,12 +6,16 @@ workshop participants, if you are an instructor and need the Setup instructions 
 So far you've created your own application repository, added CI workflows that automatically build and push your
 container images, declared how you want your application to be deployed, and you've forked this repository. The reason
 you forked this repository is that you want to propose a change to the [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra)
-repository, where you tell the GitOps operator about your application's workload manifests. In stark opposite from before,
-this time we actually do want the pull-requests to be merged back into the original repository, i.e.
+repository, where you tell the GitOps operator about your application's workload manifests.
+
+In stark opposite from before, this time we actually do want the pull-requests to be merged back into the original repository, i.e.
 [cx-devops-101/k8s-infra](https://github.com/cx-devops-101/k8s-infra), so make a mental note of that. Let's begin adding
 our new application to the cluster.
 
 ## Step 6: Declare application
+
+![](images/deploy.png)
+
 The declaration of our application will consist of a new directory with three files:
 1. `<github-username>/namespace.yaml`: In this file we declare the namespace that we want to deploy our application into.
 1. `<github-username>/notes-app-source.yaml`: In this file we tell the GitOps operator about our application repository.
@@ -70,6 +74,9 @@ will look at your pull request as soon as possible, and when it is merged your a
 you declared in the igress.yaml in your `notes-app` repository, e.g. `http://<github-username>.devops.rosbach.no`.
 
 ## Step 8: Monitoring
+
+![](images/monitor.png)
+
 Monitoring of important metrics and logs is essential to successfully implement DevOps. Developers and other stakeholders must be able to observe the metrics in specialized dashboards, and receive notifications when certain metrics exceeds a defined threshold or if a failure switch has been triggered. Good
 dashboards can provide developers with important insight into parameters such as performance, usage patterns, resource capacity, stability during peak hours
 etc. There are many tools that one can use to set up monitoring with, and we will cover the basics of one such toolset, namely Grafana and Prometheus.
